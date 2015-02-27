@@ -1,5 +1,5 @@
 Puppet::Type.type(:dotnetwinservice).provide(:dotnetwinservice) do
-	@doc "Allows installation of Microsoft .Net based windows services using InstallUtil.exe"
+	desc "Allows installation of Microsoft .Net based windows services using InstallUtil.exe"
 
   confine     :operatingsystem => :windows
   defaultfor  :operatingsystem => :windows
