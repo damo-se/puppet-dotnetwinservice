@@ -18,13 +18,19 @@ Puppet::Type.type(:dotnetwinservice).provide(:dotnetwinservice) do
       if !File.exists?(installutilpath)
         raise Puppet::Error, "Cannot find installutil.exe at #{installutilpath}"
       end
-
       args.unshift installutilpath
+      assemblypath = File.dirname(@resource[:path])
       Puppet.debug("Executing '#{args.inspect}'")
-      execute(args, :failonfail => true)
-    else
+      Dir.chdir assemblypath do
+        run_command(args)
+      end
+   else
       raise Puppet::Error, "No .Net version specified."
     end
+  end
+
+  def run_command(command)
+     execute(command, :failonfail => true)
   end
 
   def create
